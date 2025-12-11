@@ -5,7 +5,7 @@ Here is the finished design of my custom macro pad.
 <img width="583" height="627" alt="Screenshot 2025-12-11 191650" src="https://github.com/user-attachments/assets/e81f0365-d1f4-462f-95b3-44273758d8b5" />
 
 
-
+## 2. BOM
 Component,Quantity,Description
 Microcontroller,1,Seeed XIAO RP2040
 Diodes,2,Through-hole 1N4148
