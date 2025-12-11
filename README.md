@@ -1,77 +1,94 @@
-# 4-Key Hackpad Project
+[trying.csv](https://github.com/user-attachments/files/24104382/trying.csv)# 4-Key Hackpad Project
 
 ## 1. Overall Hackpad
 Here is the finished design of my custom macro pad.
-<img width="1920" height="724" alt="overall png" src="https://github.com/user-attachments/assets/13647515-e96b-4c6e-8f02-507445ffb2f3" />
+<img width="583" height="627" alt="Screenshot 2025-12-11 191650" src="https://github.com/user-attachments/assets/e81f0365-d1f4-462f-95b3-44273758d8b5" />
 
 
-## 2. Bill of Materials (BOM)
-| Part | Qty | Description |
-| :--- | :--- | :--- |
-| **Hackpad Kit** | 1 | Standard kit provided for the project |
-| ↳ *Microcontroller* | 1 | Seeed XIAO RP2040 (Included in kit) |
-| ↳ *Switches* | 4 | Mechanical Switches (Included in kit) |
-| ↳ *Keycaps* | 4 | 1u Keycaps (Included in kit) |
-| **Case** | 1 | Custom 3D Printed PLA Case |
-| **Wiring** | - | Stranded Hookup Wire |
+
+Component,Quantity,Description
+Microcontroller,1,Seeed XIAO RP2040
+Diodes,2,Through-hole 1N4148
+Switches,16,MX-Style switches
+Keycaps,16,Blank DSA keycaps (White)
+Rotary Encoders,1,EC11 Rotary encoders
+LEDs,2,SK6812 MINI-E LEDs
+Screws,-,M3x16mm screws
+Inserts,-,M3x5mmx4mm heatset inserts
+Case,1,3D Printed Case
 
 ## 3. CAD Assembly (How it fits)
-The case consists of a top and bottom shell, snap-fitted (or screwed) together.
-<img width="409" height="520" alt="assembly png" src="https://github.com/user-attachments/assets/b473a8a0-5e4b-4136-8112-bd853d0897fa" />
+The case consists of a top and bottom shell, screwed together.
+<img width="307" height="502" alt="Screenshot 2025-12-11 192406" src="https://github.com/user-attachments/assets/3909f3e3-d119-41f0-a1f0-6891f0fcab2a" />
 
 
 
 ## 4. Electronics
 ### Schematic
 The wiring logic for the switches and microcontroller.
-<img width="666" height="495" alt="schematic png" src="https://github.com/user-attachments/assets/cdcca0a7-02e6-49cd-86b0-123c34dc5659" />
+<img width="3507" height="2480" alt="image" src="https://github.com/user-attachments/assets/39ad36b5-b3c4-4996-b57e-4bd03bf0be31" />
 
 ### PCB Design
+<img width="1700" height="907" alt="trying" src="https://github.com/user-attachments/assets/a55685b3-4c18-4388-b6aa-3fb9c6c27bd0" />
 The physical board layout designed in KiCad.
-<img width="1700" height="907" alt="pcb png" src="https://github.com/user-attachments/assets/866b22a5-6a4b-4578-8ca0-e60183cf4f47" />
+
 
 ## 5. Firmware
-This project uses **CircuitPython** with **KMK**.
-* **File:** [main.py](https://github.com/user-attachments/files/24086007/main.py)
-This project runs on **CircuitPython** using the **KMK Library**.
+[main.py](https://github.com/user-attachments/files/24104359/main.py)
+"""
+Hackpad Firmware (KMK on Seeed XIAO RP2040)
+Hardware: Seeed XIAO RP2040
+Firmware: KMK (CircuitPython)
+"""
 
-```python
 import board
 from kmk.kmk_keyboard import KMKKeyboard
-from kmk.scanners.keypad import KeysScanner
 from kmk.keys import KC
-from kmk.modules.macros import Press, Release, Tap, Macros
+from kmk.scanners import DiodeOrientation
+from kmk.modules.encoder import EncoderHandler
+from kmk.extensions.media_keys import MediaKeys
 
-# Initialize Keyboard
+# -------------------------------------------------------------------------
+# SETUP
+# -------------------------------------------------------------------------
 keyboard = KMKKeyboard()
-macros = Macros()
-keyboard.modules.append(macros)
 
-# Pin Definitions (Seeed XIAO RP2040)
-# Wired to D0, D1, D2, D3
-PINS = [board.D0, board.D1, board.D2, board.D3]
+# Enable Media Keys (Required for Volume Control)
+keyboard.extensions.append(MediaKeys())
 
-# Matrix Setup
-keyboard.matrix = KeysScanner(
-    pins=PINS,
-    value_when_pressed=False,
-)
+# -------------------------------------------------------------------------
+# PINS & WIRING
+# -------------------------------------------------------------------------
+# MATRIX PINS (Switches)
+# Change these pins to match your PCB traces if different
+keyboard.col_pins = (board.D0, board.D1)
+keyboard.row_pins = (board.D2, board.D3)
+keyboard.diode_orientation = DiodeOrientation.COL2ROW
 
-# Key Mapping
-# Button 1: Copy  (Ctrl + C)
-# Button 2: Paste (Ctrl + V)
-# Button 3: Undo  (Ctrl + Z)
-# Button 4: Enter
+# ROTARY ENCODER PINS
+# Common Hackpad pinout: A=D10, B=D9
+encoder_handler = EncoderHandler()
+keyboard.modules.append(encoder_handler)
+encoder_handler.pins = ((board.D10, board.D9, None, False),)
+
+# -------------------------------------------------------------------------
+# KEYMAPPING
+# -------------------------------------------------------------------------
+
+# Encoder Map: [ (Counter-Clockwise, Clockwise, Button_Press) ]
+# Currently set to Volume Down (Left) and Volume Up (Right)
+encoder_handler.map = [ ((KC.VOLD, KC.VOLU),) ]
+
+# Button Map: 2x2 Grid
+# Current Layout: Copy, Paste, Cut, Save
 keyboard.keymap = [
     [
-        KC.MACRO(Press(KC.LCTRL), Tap(KC.C), Release(KC.LCTRL)),
-        KC.MACRO(Press(KC.LCTRL), Tap(KC.V), Release(KC.LCTRL)),
-        KC.MACRO(Press(KC.LCTRL), Tap(KC.Z), Release(KC.LCTRL)),
-        KC.ENTER,
+        KC.LCTL(KC.C),  # Top Left
+        KC.LCTL(KC.V),  # Top Right
+        KC.LCTL(KC.X),  # Bottom Left
+        KC.LCTL(KC.S)   # Bottom Right
     ]
 ]
 
 if __name__ == '__main__':
     keyboard.go()
-
-* **Microcontroller:** Seeed XIAO RP2040
