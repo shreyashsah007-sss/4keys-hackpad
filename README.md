@@ -35,8 +35,9 @@ The wiring logic for the switches and microcontroller.
 <img width="3507" height="2480" alt="image" src="https://github.com/user-attachments/assets/39ad36b5-b3c4-4996-b57e-4bd03bf0be31" />
 
 ### PCB Design
-<img width="1700" height="907" alt="trying" src="https://github.com/user-attachments/assets/a55685b3-4c18-4388-b6aa-3fb9c6c27bd0" />
 The physical board layout designed in KiCad.
+<img width="402" height="718" alt="Screenshot 2025-12-12 174820" src="https://github.com/user-attachments/assets/666f642b-406c-4392-b24f-ab4356dea8c5" />
+
 
 
 ## 5. Firmware
