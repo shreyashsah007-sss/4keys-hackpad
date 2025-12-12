@@ -5,7 +5,6 @@ Here is the finished design of my custom macro pad.
 <img width="583" height="627" alt="Screenshot 2025-12-11 191650" src="https://github.com/user-attachments/assets/e81f0365-d1f4-462f-95b3-44273758d8b5" />
 
 
-[trying.csv](https://github.com/user-attachments/files/24126853/trying.csv)
 ## 2. Bill of Materials (BOM)
 
 | Component | Quantity | Description |
@@ -21,6 +20,8 @@ Here is the finished design of my custom macro pad.
 | **Screws** | 4 | M3x16mm Screws |
 | **Inserts** | 4 | M3x5mmx4mm Heatset Inserts |
 | **Wire** | - |
+[BOM.csv](https://github.com/user-attachments/files/24127032/BOM.csv)
+
 
 
 ## 3. CAD Assembly (How it fits)
