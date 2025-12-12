@@ -5,17 +5,23 @@ Here is the finished design of my custom macro pad.
 <img width="583" height="627" alt="Screenshot 2025-12-11 191650" src="https://github.com/user-attachments/assets/e81f0365-d1f4-462f-95b3-44273758d8b5" />
 
 
-## 2. BOM
-Component,Quantity,Description
-Microcontroller,1,Seeed XIAO RP2040
-Diodes,2,Through-hole 1N4148
-Switches,16,MX-Style switches
-Keycaps,16,Blank DSA keycaps (White)
-Rotary Encoders,1,EC11 Rotary encoders
-LEDs,2,SK6812 MINI-E LEDs
-Screws,-,M3x16mm screws
-Inserts,-,M3x5mmx4mm heatset inserts
-Case,1,3D Printed Case
+[trying.csv](https://github.com/user-attachments/files/24126853/trying.csv)
+## 2. Bill of Materials (BOM)
+
+| Component | Quantity | Description |
+| :--- | :--- | :--- |
+| **Microcontroller** | 1 | Seeed Studio XIAO RP2040 |
+| **Switches** | 4 | Cherry MX Style Switches |
+| **LEDs** | 2 | SK6812 MINI (3.5x3.5mm) |
+| **Rotary Encoder** | 1 | Alps EC11E Rotary Encoder |
+| **Keycaps** | 4 | 1u Keycaps (MX Compatible) |
+| **Knob** | 1 | Rotary Encoder Knob |
+| **PCB** | 1 | Custom Hackpad PCB |
+| **Case** | 1 | 3D Printed Case |
+| **Screws** | 4 | M3x16mm Screws |
+| **Inserts** | 4 | M3x5mmx4mm Heatset Inserts |
+| **Wire** | - |
+
 
 ## 3. CAD Assembly (How it fits)
 The case consists of a top and bottom shell, screwed together.
